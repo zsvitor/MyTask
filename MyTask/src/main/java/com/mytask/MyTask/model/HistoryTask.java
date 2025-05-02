@@ -2,14 +2,12 @@ package com.mytask.MyTask.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task_history")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryTask {
@@ -37,6 +35,54 @@ public class HistoryTask {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public Task.Status getOldStatus() {
+		return oldStatus;
+	}
+
+	public void setOldStatus(Task.Status oldStatus) {
+		this.oldStatus = oldStatus;
+	}
+
+	public Task.Status getNewStatus() {
+		return newStatus;
+	}
+
+	public void setNewStatus(Task.Status newStatus) {
+		this.newStatus = newStatus;
+	}
+
+	public LocalDateTime getChangeDate() {
+		return changeDate;
+	}
+
+	public void setChangeDate(LocalDateTime changeDate) {
+		this.changeDate = changeDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public static HistoryTask createRecord(Task task, Task.Status oldStatus, Task.Status newStatus, User user) {
 		HistoryTask history = new HistoryTask();

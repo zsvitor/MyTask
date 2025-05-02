@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${taskDTO.id == null ? 'Nova Tarefa' : 'Editar Tarefa'})}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${taskDTO.id == null ? 'Nova Tarefa' : 'Editar Tarefa'}">Tarefa</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="${taskDTO.id == null ? '/tasks/new' : '/tasks/' + taskDTO.id + '/edit'}" 
+                              th:object="${taskDTO}" 
+                              method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título</label>
+                                <input type="text" id="title" th:field="*{title}" class="form-control" required>
+                                <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Erro no título</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descrição</label>
+                                <textarea id="description" th:field="*{description}" class="form-control" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="dueDate" class="form-label">Data de Vencimento</label>
+                                <input type="date" id="dueDate" th:field="*{dueDate}" class="form-control" required>
+                                <div class="text-danger" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}">Erro na data</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="priority" class="form-label">Prioridade</label>
+                                <select id="priority" th:field="*{priority}" class="form-select" required>
+                                    <option value="">Selecione</option>
+                                    <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority}">Prioridade</option>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}">Erro na prioridade</div>
+                            </div>
+                            
+                            <div class="mb-3" th:if="${taskDTO.id != null}">
+                                <label for="status" class="form-label">Status</label>
+                                <select id="status" th:field="*{status}" class="form-select" required>
+                                    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">Status</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Categorias</label>
+                                <div class="mb-2" th:if="${#lists.isEmpty(categories)}">
+                                    <div class="alert alert-warning">
+                                        Você não possui categorias. <a th:href="@{/categories/new}">Criar nova categoria</a>
+                                    </div>
+                                </div>
+                                <div th:each="category : ${categories}" class="form-check">
+                                    <input class="form-check-input" type="checkbox" 
+                                           th:value="${category.id}" 
+                                           th:field="*{categoryIds}" 
+                                           th:id="'category-' + ${category.id}">
+                                    <label class="form-check-label" th:for="'category-' + ${category.id}" th:text="${category.name}">
+                                        Categoria
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/tasks}" class="btn btn-outline-secondary">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

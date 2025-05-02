@@ -11,21 +11,15 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-	
-	List<Task> findByUserOrderByDueDateAsc(User user);
+	List<Task> findByUser(User user);
 
-	List<Task> findByUserAndStatusOrderByDueDateAsc(User user, Task.Status status);
+	List<Task> findByUserAndStatus(User user, Task.Status status);
 
-	List<Task> findByUserAndPriorityOrderByDueDateAsc(User user, Task.Priority priority);
+	List<Task> findByUserAndPriority(User user, Task.Priority priority);
 
-	@Query("SELECT t FROM Task t JOIN t.categories c WHERE t.user = :user AND c.id = :categoryId ORDER BY t.dueDate ASC")
-	List<Task> findByUserAndCategoryOrderByDueDateAsc(@Param("user") User user, @Param("categoryId") Long categoryId);
+	@Query("SELECT t FROM Task t WHERE t.user = :user AND t.dueDate <= :date")
+	List<Task> findByUserAndDueDateBefore(@Param("user") User user, @Param("date") LocalDate date);
 
-	@Query("SELECT t FROM Task t WHERE t.user = :user AND t.dueDate BETWEEN :startDate AND :endDate ORDER BY t.dueDate ASC")
-	List<Task> findByUserAndDueDateBetweenOrderByDueDateAsc(@Param("user") User user,
-			@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
-	List<Task> findByUserAndDueDateLessThanEqualAndStatusOrderByDueDateAsc(User user, LocalDate date,
-			Task.Status status);
-
+	@Query("SELECT t FROM Task t JOIN t.categories c WHERE t.user = :user AND c.id = :categoryId")
+	List<Task> findByUserAndCategory(@Param("user") User user, @Param("categoryId") Long categoryId);
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Minhas Tarefas')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Minhas Tarefas</h2>
+            <a th:href="@{/tasks/new}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nova Tarefa
+            </a>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Filtros</h5>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/tasks}" method="get" th:object="${filterDTO}">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" th:field="*{status}" class="form-select">
+                                <option value="">Todos</option>
+                                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">Status</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="priority" class="form-label">Prioridade</label>
+                            <select id="priority" th:field="*{priority}" class="form-select">
+                                <option value="">Todas</option>
+                                <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority}">Prioridade</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="categoryId" class="form-label">Categoria</label>
+                            <select id="categoryId" th:field="*{categoryId}" class="form-select">
+                                <option value="">Todas</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoria</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="dueDateBefore" class="form-label">Data Vencimento Até</label>
+                            <input type="date" id="dueDateBefore" th:field="*{dueDateBefore}" class="form-control">
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <a th:href="@{/tasks}" class="btn btn-outline-secondary ms-2">Limpar Filtros</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body p-0">
+                <div th:if="${#lists.isEmpty(tasks)}" class="p-4 text-center">
+                    <p class="mb-0">Nenhuma tarefa encontrada.</p>
+                </div>
+                <div th:unless="${#lists.isEmpty(tasks)}" class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Título</th>
+                                <th>Data Vencimento</th>
+                                <th>Prioridade</th>
+                                <th>Status</th>
+                                <th>Categorias</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="task : ${tasks}">
+                                <td th:text="${task.title}">Título da Tarefa</td>
+                                <td th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy')}">01/01/2023</td>
+                                <td>
+                                    <span th:class="${task.priority == T(com.mytask.MyTask.model.Task.Priority).BAIXA ? 'badge bg-success' : (task.priority == T(com.mytask.MyTask.model.Task.Priority).MEDIA ? 'badge bg-warning' : 'badge bg-danger')}" 
+                                          th:text="${task.priority}">Prioridade</span>
+                                </td>
+                                <td>
+                                    <span th:class="${task.status == T(com.mytask.MyTask.model.Task.Priority).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
+                                          th:text="${task.status}">Status</span>
+                                </td>
+                                <td>
+                                    <span th:each="category, iterStat : ${task.categories}" 
+                                          class="badge bg-info me-1" 
+                                          th:text="${category.name + (iterStat.last ? '' : '')}">Categoria</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a th:href="@{/tasks/{id}/edit(id=${task.id})}" class="btn btn-outline-primary" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a th:if="${task.status == T(com.mytask.MyTask.model.Task.Status).PENDENTE}" 
+                                           th:href="@{/tasks/{id}/complete(id=${task.id})}" 
+                                           class="btn btn-outline-success" 
+                                           title="Marcar como Concluída">
+                                            <i class="bi bi-check-lg"></i>
+                                        </a>
+                                        <a th:if="${task.status == T(com.mytask.MyTask.model.Task.Status).CONCLUIDO}" 
+                                           th:href="@{/tasks/{id}/reopen(id=${task.id})}" 
+                                           class="btn btn-outline-warning" 
+                                           title="Reabrir Tarefa">
+                                            <i class="bi bi-arrow-counterclockwise"></i>
+                                        </a>
+                                        <a th:href="@{/tasks/{id}/history(id=${task.id})}" class="btn btn-outline-info" title="Histórico">
+                                            <i class="bi bi-clock-history"></i>
+                                        </a>
+                                        <a th:href="@{/tasks/{id}/delete(id=${task.id})}" 
+                                           class="btn btn-outline-danger" 
+                                           title="Excluir"
+                                           onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

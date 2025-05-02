@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${categoryDTO.id == null ? 'Nova Categoria' : 'Editar Categoria'})}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${categoryDTO.id == null ? 'Nova Categoria' : 'Editar Categoria'}">Categoria</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="${categoryDTO.id == null ? '/categories/new' : '/categories/' + categoryDTO.id + '/edit'}" 
+                              th:object="${categoryDTO}" 
+                              method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome</label>
+                                <input type="text" id="name" th:field="*{name}" class="form-control" required>
+                                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Erro no nome</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descrição</label>
+                                <textarea id="description" th:field="*{description}" class="form-control" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/categories}" class="btn btn-outline-secondary">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

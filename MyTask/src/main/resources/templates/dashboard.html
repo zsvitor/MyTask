@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+
+    <div class="container mt-4">
+        <h2>Dashboard</h2>
+        
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Tarefas</h5>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center"><i class="bi bi-list-check"></i></h2>
+                        <p class="card-text text-center">Gerencie suas tarefas</p>
+                        <div class="d-grid">
+                            <a th:href="@{/tasks}" class="btn btn-outline-primary">Ver Tarefas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Nova Tarefa</h5>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center"><i class="bi bi-plus-circle"></i></h2>
+                        <p class="card-text text-center">Adicione uma nova tarefa</p>
+                        <div class="d-grid">
+                            <a th:href="@{/tasks/new}" class="btn btn-outline-success">Criar Tarefa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card border-info">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Categorias</h5>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center"><i class="bi bi-tags"></i></h2>
+                        <p class="card-text text-center">Gerencie suas categorias</p>
+                        <div class="d-grid">
+                            <a th:href="@{/categories}" class="btn btn-outline-info">Ver Categorias</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

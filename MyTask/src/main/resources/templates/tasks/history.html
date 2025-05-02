@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Histórico da Tarefa')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Histórico da Tarefa</h4>
+                        <a th:href="@{/tasks}" class="btn btn-sm btn-outline-light">Voltar para Tarefas</a>
+                    </div>
+                    <div class="card-body">
+                        <h5 th:text="${task.title}" class="mb-2">Título da Tarefa</h5>
+                        <div class="mb-4">
+                            <span th:class="${task.status == T(com.mytask.MyTask.model.Task.Status).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
+                                  th:text="${task.status}">Status</span>
+                            <span th:class="${task.priority == T(com.mytask.MyTask.model.Task.Priority).BAIXA ? 'badge bg-success' : (task.priority == T(com.mytask.MyTask.model.Task.Priority).MEDIA ? 'badge bg-warning' : 'badge bg-danger')}" 
+                                  th:text="${task.priority}" class="ms-2">Prioridade</span>
+                            <span class="ms-2">Vencimento: <strong th:text="${#temporals.format(task.dueDate, 'dd/MM/yyyy')}">01/01/2023</strong></span>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Status Anterior</th>
+                                        <th>Novo Status</th>
+                                        <th>Alterado por</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:if="${#lists.isEmpty(history)}">
+                                        <td colspan="4" class="text-center">Nenhum registro de histórico encontrado.</td>
+                                    </tr>
+                                    <tr th:each="record : ${history}">
+                                        <td th:text="${#temporals.format(record.changeDate, 'dd/MM/yyyy HH:mm')}">01/01/2023 14:30</td>
+                                        <td>
+                                            <span th:if="${record.oldStatus != null}" 
+                                                  th:class="${record.oldStatus == T(com.mytask.MyTask.model.Task.Status).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
+                                                  th:text="${record.oldStatus}">Status Anterior</span>
+                                            <span th:if="${record.oldStatus == null}" class="text-muted">Criação da tarefa</span>
+                                        </td>
+                                        <td>
+                                            <span th:class="${record.newStatus == T(com.mytask.MyTask.model.Task.Status).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
+                                                  th:text="${record.newStatus}">Novo Status</span>
+                                        </td>
+                                        <td th:text="${record.user.name}">Usuário</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
