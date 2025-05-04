@@ -29,7 +29,7 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="password" class="form-label">Nova Senha (deixe em branco para manter a atual)</label>
+                                <label for="password" class="form-label">Nova Senha</label>
                                 <input type="password" id="password" th:field="*{password}" class="form-control">
                                 <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Erro na senha</div>
                             </div>

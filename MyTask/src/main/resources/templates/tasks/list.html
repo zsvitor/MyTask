@@ -80,7 +80,7 @@
                                           th:text="${task.priority}">Prioridade</span>
                                 </td>
                                 <td>
-                                    <span th:class="${task.status == T(com.mytask.MyTask.model.Task.Priority).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
+                                    <span th:class="${task.status == T(com.mytask.MyTask.model.Task.Status).PENDENTE ? 'badge bg-warning' : 'badge bg-success'}" 
                                           th:text="${task.status}">Status</span>
                                 </td>
                                 <td>
