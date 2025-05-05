@@ -3,27 +3,22 @@
 <head th:replace="~{fragments/layout :: head('Erro no servidor')}"></head>
 <body>
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
-
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-danger">
-                    <div class="card-header bg-danger text-white">
+                <div class="card">
+                    <div class="card-header">
                         <h4 class="mb-0">Erro no servidor (500)</h4>
                     </div>
-                    <div class="card-body text-center">
-                        <i class="bi bi-exclamation-circle-fill text-danger display-1 mb-4"></i>
-                        <h4 th:text="${errorMessage != null ? errorMessage : 'Ocorreu um erro inesperado no servidor.'}">
-                            Ocorreu um erro inesperado no servidor.
-                        </h4>
-                        <p class="text-muted">Por favor, tente novamente mais tarde ou entre em contato com o suporte.</p>
+                    <div class="card-body text-center"><i class="bi bi-exclamation-circle-fill display-1 mb-4" style="color: #ff4747;"></i>
+                        <h4 th:text="${errorMessage != null ? errorMessage : 'Ocorreu um erro inesperado no servidor.'}">Ocorreu um erro inesperado no servidor.</h4>
+                        <p class="text-gray">Por favor, tente novamente mais tarde ou entre em contato com o suporte.</p>
                         <a th:href="@{/}" class="btn btn-primary mt-3">Voltar para a página inicial</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>

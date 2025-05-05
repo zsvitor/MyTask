@@ -4,23 +4,19 @@
 <body>
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
     <div th:replace="~{fragments/layout :: messages}"></div>
-
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Minhas Categorias</h2>
-            <a th:href="@{/categories/new}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nova Categoria
-            </a>
+            <a th:href="@{/categories/new}" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>Nova Categoria</a>
         </div>
-        
         <div class="card">
             <div class="card-body p-0">
                 <div th:if="${#lists.isEmpty(categories)}" class="p-4 text-center">
-                    <p class="mb-0">Nenhuma categoria encontrada.</p>
+                    <p class="mb-0 text-white">Nenhuma categoria encontrada.</p>
                 </div>
                 <div th:unless="${#lists.isEmpty(categories)}" class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
+                    <table class="table table-hover mb-0">
+                        <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Descrição</th>
@@ -29,20 +25,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="category : ${categories}">
+                            <tr th:each="category : ${categories}" class="category-row">
                                 <td th:text="${category.name}">Nome da Categoria</td>
                                 <td th:text="${category.description}">Descrição da Categoria</td>
-                                <td th:text="${category.tasks.size()}">0</td>
+                                <td>
+                                    <span class="badge text-neon" style="background-color: rgba(233, 255, 71, 0.15);" th:text="${category.tasks.size()}">0</span>
+                                </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a th:href="@{/categories/{id}/edit(id=${category.id})}" class="btn btn-outline-primary" title="Editar">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a th:href="@{/categories/{id}/delete(id=${category.id})}" 
-                                           class="btn btn-outline-danger" 
-                                           title="Excluir"
-                                           onclick="return confirm('Tem certeza que deseja excluir esta categoria? Se houver tarefas associadas, a categoria não poderá ser excluída.')">
-                                            <i class="bi bi-trash"></i>
+                                        <a th:href="@{/categories/{id}/edit(id=${category.id})}" class="btn btn-outline-primary" title="Editar"><i class="bi bi-pencil"></i></a>
+                                        <a th:href="@{/categories/{id}/delete(id=${category.id})}" class="btn btn-outline-danger" title="Excluir"
+                                            onclick="return confirm('Tem certeza que deseja excluir esta categoria? Se houver tarefas associadas, a categoria não poderá ser excluída.')"><i class="bi bi-trash"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -53,7 +46,6 @@
             </div>
         </div>
     </div>
-
     <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>

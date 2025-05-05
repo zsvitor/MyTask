@@ -4,42 +4,40 @@
 <body>
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
     <div th:replace="~{fragments/layout :: messages}"></div>
-
     <div class="container mt-5">
         <div class="jumbotron text-center">
-            <h1 class="display-4">Bem-vindo ao MyTask</h1>
+            <h1 class="display-4">Bem-vindo ao <span class="text-neon neon-glow">MyTask</span></h1>
             <p class="lead">Gerencie suas tarefas de forma eficiente e organizada.</p>
             <hr class="my-4">
             <p>O MyTask ajuda você a acompanhar suas atividades, definir prioridades e categorias, e manter tudo sob controle.</p>
-            <div class="d-flex justify-content-center mt-4">
-                <a class="btn btn-primary btn-lg me-3" th:href="@{/login}" role="button">Entrar</a>
+            <div class="d-flex justify-content-center mt-4 gap-3">
+                <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button">Entrar</a>
                 <a class="btn btn-outline-primary btn-lg" th:href="@{/register}" role="button">Cadastre-se</a>
             </div>
         </div>
-        
         <div class="row mt-5">
             <div class="col-md-4">
-                <div class="card mb-4">
+                <div class="card feature-card mb-4">
                     <div class="card-body text-center">
-                        <i class="bi bi-list-check display-4 text-primary"></i>
+                        <i class="bi bi-list-check display-4 float-animation"></i>
                         <h3 class="card-title mt-3">Organize suas tarefas</h3>
                         <p class="card-text">Mantenha o controle de todas as suas tarefas em um só lugar.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
+                <div class="card feature-card mb-4">
                     <div class="card-body text-center">
-                        <i class="bi bi-tags display-4 text-primary"></i>
+                        <i class="bi bi-tags display-4 float-animation"></i>
                         <h3 class="card-title mt-3">Categorize</h3>
                         <p class="card-text">Organize suas tarefas por categorias personalizadas.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
+                <div class="card feature-card mb-4">
                     <div class="card-body text-center">
-                        <i class="bi bi-graph-up display-4 text-primary"></i>
+                        <i class="bi bi-graph-up display-4 float-animation"></i>
                         <h3 class="card-title mt-3">Acompanhe o progresso</h3>
                         <p class="card-text">Veja seu histórico e acompanhe o andamento das suas tarefas.</p>
                     </div>
@@ -47,7 +45,6 @@
             </div>
         </div>
     </div>
-
     <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
