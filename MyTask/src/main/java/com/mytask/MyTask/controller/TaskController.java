@@ -7,7 +7,7 @@ import com.mytask.MyTask.model.HistoryTask;
 import com.mytask.MyTask.model.Task;
 import com.mytask.MyTask.model.User;
 import com.mytask.MyTask.service.CategoryService;
-import com.mytask.MyTask.service.TaskService;
+import com.mytask.MyTask.service.ITaskService;
 import com.mytask.MyTask.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 public class TaskController {
 
 	@Autowired
-	private TaskService taskService;
-	
+	private ITaskService taskService;
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -175,7 +175,7 @@ public class TaskController {
 	private User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return userService.getUserByEmail(auth.getName())
-				.orElseThrow(() -> new IllegalStateException("Usuário não autenticado"));
+				.orElseThrow(() -> new IllegalStateException("Usuário não autenticado."));
 	}
 
 }

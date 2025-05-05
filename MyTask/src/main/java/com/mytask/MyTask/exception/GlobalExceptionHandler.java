@@ -12,12 +12,14 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	// Manipula exceções ResourceNotFoundException.
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public String handleResourceNotFoundException(ResourceNotFoundException ex, Model model) {
 		model.addAttribute("errorMessage", ex.getMessage());
 		return "error/404";
 	}
 
+	// Manipula exceções de validação de formulários.
 	@ExceptionHandler(BindException.class)
 	public String handleValidationExceptions(BindException ex, RedirectAttributes redirectAttributes) {
 		Map<String, String> errors = new HashMap<>();
@@ -31,12 +33,14 @@ public class GlobalExceptionHandler {
 		return "redirect:back";
 	}
 
+	// Manipula exceções IllegalArgumentException.
 	@ExceptionHandler(IllegalArgumentException.class)
 	public String handleIllegalArgumentException(IllegalArgumentException ex, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
 		return "redirect:back";
 	}
 
+	// Manipula todas exceções não tratadas especificamente.
 	@ExceptionHandler(Exception.class)
 	public String handleGenericException(Exception ex, Model model) {
 		model.addAttribute("errorMessage", "Ocorreu um erro inesperado: " + ex.getMessage());

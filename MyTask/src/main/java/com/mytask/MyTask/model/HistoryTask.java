@@ -84,6 +84,7 @@ public class HistoryTask {
 		this.user = user;
 	}
 
+	// Método para o histórico da tarefa.
 	public static HistoryTask createRecord(Task task, Task.Status oldStatus, Task.Status newStatus, User user) {
 		HistoryTask history = new HistoryTask();
 		history.setTask(task);

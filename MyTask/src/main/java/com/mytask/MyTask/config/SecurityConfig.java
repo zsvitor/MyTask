@@ -23,25 +23,28 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
 	private final CustomUserDetailsService userDetailsService;
-	
 	private final DataSource dataSource;
 
+	// Inicializa os serviços para autenticação e acesso ao banco de dados.
 	public SecurityConfig(CustomUserDetailsService userDetailsService, DataSource dataSource) {
 		this.userDetailsService = userDetailsService;
 		this.dataSource = dataSource;
 	}
 
+	// Define o encoder de senha (criptografar e verificar senhas).
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	// Gerenciador de autenticação do usuário e encoder de senha.
 	@Bean
 	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder()).and().build();
 	}
 
+	// Filtros de segurança.
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authorize) -> authorize
@@ -59,6 +62,8 @@ public class SecurityConfig {
 		return http.build();
 	}
 
+	// Configura o repositório de tokens persistentes usado pela funcionalidade
+	// "remember-me"
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();

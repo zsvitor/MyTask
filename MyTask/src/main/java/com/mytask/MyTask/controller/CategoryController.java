@@ -101,7 +101,7 @@ public class CategoryController {
 	private User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return userService.getUserByEmail(auth.getName())
-				.orElseThrow(() -> new IllegalStateException("Usuário não autenticado"));
+				.orElseThrow(() -> new IllegalStateException("Usuário não autenticado."));
 	}
 
 }

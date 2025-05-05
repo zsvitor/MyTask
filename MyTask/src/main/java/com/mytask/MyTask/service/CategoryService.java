@@ -15,6 +15,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
+	// Método para criar uma nova categoria de um usuário específico.
 	public Category createCategory(CategoryDTO categoryDTO, User user) {
 		if (categoryRepository.existsByNameAndUser(categoryDTO.getName(), user)) {
 			throw new IllegalArgumentException("Já existe uma categoria com este nome");
@@ -26,6 +27,7 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 
+	// Método para buscar uma categoria pelo ID de um usuário específico.
 	public Category getCategoryById(Long id, User user) {
 		Category category = categoryRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada com o ID: " + id));
@@ -35,10 +37,12 @@ public class CategoryService {
 		return category;
 	}
 
+	// Método para buscar as categorias de um usuário específico.
 	public List<Category> getCategoriesByUser(User user) {
 		return categoryRepository.findByUser(user);
 	}
 
+	// Método para atualizar a categoria de um usuário específico.
 	public Category updateCategory(Long id, CategoryDTO categoryDTO, User user) {
 		Category category = getCategoryById(id, user);
 		if (!category.getName().equals(categoryDTO.getName())
@@ -50,6 +54,7 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 
+	// Método para remover a categoria de um usuário específico.
 	public void deleteCategory(Long id, User user) {
 		Category category = getCategoryById(id, user);
 		if (!category.getTasks().isEmpty()) {

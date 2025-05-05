@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface HistoryTaskRepository extends JpaRepository<HistoryTask, Long> {
-	List<HistoryTask> findByTaskOrderByChangeDateDesc(Task task);
+	
+	// Busca o histórico de mudanças de uma tarefa específica (mais recente para a mais antiga).
+	public List<HistoryTask> findByTaskOrderByChangeDateDesc(Task task);
+	
 }
