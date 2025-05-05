@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import javax.sql.DataSource;
 
 @Configuration
@@ -62,8 +61,7 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	// Configura o repositório de tokens persistentes usado pela funcionalidade
-	// "remember-me"
+	// Configura o repositório de tokens persistentes usado pela funcionalidade "remember-me".
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();

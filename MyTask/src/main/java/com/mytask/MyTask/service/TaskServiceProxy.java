@@ -8,7 +8,6 @@ import com.mytask.MyTask.model.User;
 import com.mytask.MyTask.util.LoggerManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 // Implementa o padrão Proxy para adicionar logging e segurança antes de repassar chamadas ao TaskService.
