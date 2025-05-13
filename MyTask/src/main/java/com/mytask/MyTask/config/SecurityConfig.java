@@ -49,7 +49,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers("/", "/register", "/css/**", "/js/**", "/images/**", "/webjars/**", "/h2-console/**")
 				.permitAll().anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard")
+				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/dashboard", true)
 						.permitAll())
 				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 						.logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID").invalidateHttpSession(true)
