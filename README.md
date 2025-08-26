@@ -2,6 +2,7 @@
 
 ## 📖 Sobre o Projeto
 Este projeto foi desenvolvido como parte da disciplina **Desenvolvimento de Sistemas Web** (4º semestre do curso de Análise e Desenvolvimento de Sistemas).  
+
 O objetivo é criar uma **agenda pessoal para gestão de tarefas**, permitindo ao usuário organizar e controlar suas atividades de forma prática e segura.
 
 ## 🚀 Tecnologias Utilizadas
